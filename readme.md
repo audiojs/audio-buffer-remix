@@ -5,43 +5,17 @@ Upmix or downmix channels in [AudioBuffer](https://github.com/audiojs/audio-buff
 | Input Channels | Output Channels | Rules |
 |---|---|---|
 | 1 (Mono) | 2 (Stereo) | output[0] = input[0]<br/>output[1] = input[0] |
-| 1 (Mono) | 4 (Quad) | output[0] = input[0]
-output[1] = input[0]
-output[2] = 0
-output[3] = 0 |
-| 1 (Mono) | 6 (5.1) | output[0] = 0
-output[1] = 0
-output[2] = input[0]
-output[3] = 0
-output[4] = 0
-output[5] = 0 |
+| 1 (Mono) | 4 (Quad) | output[0] = input[0]<br/>output[1] = input[0]<br/>output[2] = 0<br/>output[3] = 0 |
+| 1 (Mono) | 6 (5.1) | output[0] = 0<br/>output[1] = 0<br/>output[2] = input[0]<br/>output[3] = 0<br/>output[4] = 0<br/>output[5] = 0 |
 | 2 (Stereo) | 1 (Mono) | output[0] = 0.5 * (input[0] + input[1]) |
-| 2 (Stereo) | 4 (Quad) | output[0] = input[0]
-output[1] = input[1]
-output[2] = 0
-output[3] = 0 |
-| 2 (Stereo) | 6 (5.1) | output[0] = input[0]
-output[1] = input[1]
-output[2] = 0
-output[3] = 0
-output[4] = 0
-output[5] = 0 |
+| 2 (Stereo) | 4 (Quad) | output[0] = input[0]<br/>output[1] = input[1]<br/>output[2] = 0<br/>output[3] = 0 |
+| 2 (Stereo) | 6 (5.1) | output[0] = input[0]<br/>output[1] = input[1]<br/>output[2] = 0<br/>output[3] = 0<br/>output[4] = 0<br/>output[5] = 0 |
 | 4 (Quad) | 1 (Mono) | output[0] = 0.25 * (input[0] + input[1] + input[2] + input[3]) |
-| 4 (Quad) | 2 (Stereo) | output[0] = 0.5 * (input[0] + input[2])
-output[1] = 0.5 * (input[1] + input[3]) |
-| 4 (Quad) | 6 (5.1) | output[0] = input[0]
-output[1] = input[1]
-output[2] = 0
-output[3] = 0
-output[4] = input[2]
-output[5] = input[3] |
+| 4 (Quad) | 2 (Stereo) | output[0] = 0.5 * (input[0] + input[2])<br/>output[1] = 0.5 * (input[1] + input[3]) |
+| 4 (Quad) | 6 (5.1) | output[0] = input[0]<br/>output[1] = input[1]<br/>output[2] = 0<br/>output[3] = 0<br/>output[4] = input[2]<br/>output[5] = input[3] |
 | 6 (5.1) | 1 (Mono) | output[0] = 0.7071 * (input[0] + input[1]) + input[2] + 0.5 * (input[2] + input[3]) |
-| 6 (5.1) | 2 (Stereo) | output[0] = input[0] + 0.7071 * (input[2] + input[4])
-output[1] = input[1] + 0.7071 * (input[2] + input[5]) |
-| 6 (5.1) | 4 (Quad) | output[0] = input[0] + 0.7071 * input[2]
-output[1] = input[1] + 0.7071 * input[2]
-output[2] = input[4]
-output[3] = input[5] |
+| 6 (5.1) | 2 (Stereo) | output[0] = input[0] + 0.7071 * (input[2] + input[4])<br/>output[1] = input[1] + 0.7071 * (input[2] + input[5]) |
+| 6 (5.1) | 4 (Quad) | output[0] = input[0] + 0.7071 * input[2]<br/>output[1] = input[1] + 0.7071 * input[2]<br/>output[2] = input[4]<br/>output[3] = input[5] |
 | n | m | output[n] = input[n] |
 
 ## Usage
