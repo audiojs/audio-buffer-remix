@@ -35,9 +35,9 @@ quadBuffer = remix(stereoBuffer, 4)
 
 ### `let dest = remix(source, channels|map, {context, interpretation}?)`
 
-Take `source` audio buffer/list and upmix/downmix its channels to `dest` with the indicated number of `channels`. `options` may provide audio `context` or interpretation type: `'discrete'` or `'speaker'`, see [channelInterpretation MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode/channelInterpretation).
+Take `source` audio buffer and upmix/downmix its channels to `dest` with the indicated number of `channels`. `options` may provide audio `context` or interpretation type: `'discrete'` or `'speaker'`, see [channelInterpretation MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode/channelInterpretation).
 
-Alternately pass `map` − a list or object with channel mapping. Numbers as values map channels directly by numbers, `null` drops channel from output and function with `(destChannelData, source) => {}` signature expects to fill `destChannelData` array.
+Alternatively pass `map` − a list or object with channel mapping. Numbers as values map channels directly by numbers, `null` drops channel from output and function with `(destChannelData, source) => {}` signature expects to fill `destChannelData` array.
 
 ```js
 const util = require('audio-buffer-utils')
