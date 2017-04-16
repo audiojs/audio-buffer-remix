@@ -1,4 +1,4 @@
-# audio-buffer-remix [![Build Status](https://travis-ci.org/audiojs/audio-buffer-remix.svg?branch=master)](https://travis-ci.org/audiojs/audio-buffer-remix) [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+# audio-buffer-remix [![Build Status](https://travis-ci.org/audiojs/audio-buffer-remix.svg?branch=master)](https://travis-ci.org/audiojs/audio-buffer-remix) [![Greenkeeper badge](https://badges.greenkeeper.io/audiojs/audio-buffer-remix.svg)](https://greenkeeper.io/) [![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
 
 Upmix or downmix channels in [AudioBuffer](https://github.com/audiojs/audio-buffer) or [AudioBufferList](https://github.com/audiojs/audio-buffer-list) by the following table:
 
