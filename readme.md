@@ -1,32 +1,22 @@
 # audio-buffer-remix [![Build Status](https://travis-ci.org/audiojs/audio-buffer-remix.svg?branch=master)](https://travis-ci.org/audiojs/audio-buffer-remix) [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
-Upmix or downmix channels in [AudioBuffer](https://github.com/audiojs/audio-buffer) or [AudioBufferList](https://github.com/audiojs/audio-buffer-list) by the following tables.
-
-Speaker interpretation:
+Upmix or downmix channels in [AudioBuffer](https://github.com/audiojs/audio-buffer) or [AudioBufferList](https://github.com/audiojs/audio-buffer-list) by the following table:
 
 | Input Channels | Output Channels | Rules |
 |---|---|---|
-| 1 (Mono) | 2 (Stereo) | |
+| 1 (Mono) | 2 (Stereo) | output.L = input.M<br/>output.R = input.M |
 | 1 (Mono) | 4 (Quad) | |
 | 1 (Mono) | 6 (5.1) | |
 | 2 (Stereo) | 1 (Mono) | |
 | 2 (Stereo) | 4 (Quad) | |
 | 2 (Stereo) | 6 (5.1) | |
 | 4 (Quad) | 1 (Mono) | |
-| 4 (Quad) | 4 (Quad) | |
+| 4 (Quad) | 2 (Stereo) | |
 | 4 (Quad) | 6 (5.1) | |
 | 6 (5.1) | 1 (Mono) | |
+| 6 (5.1) | 2 (Stereo) | |
 | 6 (5.1) | 4 (Quad) | |
-| 6 (5.1) | 6 (5.1) | |
-| Other | Other | Non-standard layouts use `discrete` interpretation. |
-
-Discrete interpretation:
-
-| Input Channels | Output Channels | Rules |
-|---|---|---|
-| 1 (Mono) | 2 (Stereo) | |
-| 1 (Mono) | 4 (Quad) | |
-
+| Other | Other | Non-standard layouts use direct channel mapping. |
 
 ## Usage
 
@@ -36,26 +26,18 @@ Discrete interpretation:
 const AudioBuffer = require('audio-buffer')
 const remix = require('audio-buffer-remix')
 
-let audioBuffer = new AudioBuffer(2, 1024)
+let stereoBuffer = new AudioBuffer(2, 1024)
 
-//convert stereo buffer to quad buffer
-audioBuffer = remix(audioBuffer, 4)
+quadBuffer = remix(stereoBuffer, 4)
 ```
 
 ## API
 
 ### `let dest = remix(source, channels|map, {context, interpretation}?)`
 
-Take `source` audio buffer/list and upmix/downmix its channels to `dest` with the indicated number of `channels`. `options` may provide audio context or interpretation type `'discrete'` or `'speaker'`, see [channelInterpretation MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode/channelInterpretation).
+Take `source` audio buffer/list and upmix/downmix its channels to `dest` with the indicated number of `channels`. `options` may provide audio `context` or interpretation type: `'discrete'` or `'speaker'`, see [channelInterpretation MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode/channelInterpretation).
 
-```js
-let src = new AudioBuffer(2, 1024)
-
-//mix stereo to quad
-let dest = remix(src, 4)
-```
-
-Alternately pass `map` — a list or object with channel mapping. Numbers as values will map source to dest channel directly, `null` will fill output channel data with zeros, function will take `(destChannelData, source) => {}` signature, expecting to fill `destChannelData` array.
+Alternately pass `map` − a list or object with channel mapping. Numbers as values map channels directly by numbers, `null` drops channel from output and function with `(destChannelData, source) => {}` signature expects to fill `destChannelData` array.
 
 ```js
 const util = require('audio-buffer-utils')
@@ -63,20 +45,20 @@ const util = require('audio-buffer-utils')
 let source = util.noise(util.create(1024, 2))
 
 let dest = remix(source, {
-	//0 output channel - take first input channel data
-	0: 1,
+    //0 output channel - take first input channel data
+    0: 1,
 
-	//1 output channel - mute the data
-	1: null,
+    //1 output channel - mute the data
+    1: null,
 
-	//2 output channel - mix 0 + 1 channels
-	2: (destChannel, source) => {
-		let left = source.getChannelData(0)
-		let right = source.getChannelData(1)
-		for (let i = 0; i < out.length; i++) {
-			destChannel[i] = left[i] * .5 + right[i] * .5
-		}
-	}
+    //2 output channel - mix 0 + 1 channels
+    2: (destChannel, source) => {
+        let left = source.getChannelData(0)
+        let right = source.getChannelData(1)
+        for (let i = 0; i < out.length; i++) {
+            destChannel[i] = left[i] * .5 + right[i] * .5
+        }
+    }
 })
 
 dest.numberOfChannels // 3
