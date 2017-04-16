@@ -5,7 +5,7 @@ const remix = require('./')
 const AudioBuffer = require('audio-buffer')
 
 
-t('interpretation: discrete', t => {
+t('channel combinations', t => {
   for (let from = 1; from <= 32; from++) {
     for (let to = 1; to <= 32; to++) {
       let a = AudioBuffer(from, 1024)
@@ -17,3 +17,9 @@ t('interpretation: discrete', t => {
 
   t.end()
 })
+
+t('interpretation: discrete')
+
+t('interpretation: speaker')
+
+t('custom mapper')
