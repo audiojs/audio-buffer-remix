@@ -1,5 +1,7 @@
 # audio-buffer-remix [![Build Status](https://travis-ci.org/audiojs/audio-buffer-remix.svg?branch=master)](https://travis-ci.org/audiojs/audio-buffer-remix) [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/audiojs/audio-buffer-remix.svg)](https://greenkeeper.io/)
+
 Upmix or downmix channels in [AudioBuffer](https://github.com/audiojs/audio-buffer) or [AudioBufferList](https://github.com/audiojs/audio-buffer-list) by the following tables.
 
 Speaker interpretation:
