@@ -1,6 +1,6 @@
 {
   "name": "audio-buffer-remix",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Upmix or downmix AudioBuffer channels",
   "main": "index.js",
   "scripts": {
