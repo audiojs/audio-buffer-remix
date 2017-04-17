@@ -108,6 +108,7 @@ function remix (source, channels, options) {
   if (channels === inputChannels) return source;
 
   if (!options) options = {}
+  else if (typeof options === 'string') options = {interpretation: options}
 
   let interpretation = options.interpretation || 'speaker'
 

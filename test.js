@@ -3,15 +3,28 @@
 const t = require('tape')
 const remix = require('./')
 const AudioBuffer = require('audio-buffer')
-
+const util = require('audio-buffer-utils')
 
 t('discrete: * to *', t => {
-  for (let from = 1; from <= 32; from++) {
-    for (let to = 1; to <= 32; to++) {
-      let a = AudioBuffer(from, 1024)
-      let b = remix(a, to)
+  let zero = new Float32Array(1024)
+  for (let from = 1; from <= 8; from++) {
+    for (let to = 1; to <= 8; to++) {
+      let a = util.noise(AudioBuffer(from, 1024))
+      let b = remix(a, to, 'discrete')
 
       t.equal(b.numberOfChannels, to)
+
+      //test that channel data is copied
+      for (let x = 1; x < Math.min(from, to); x++) {
+        t.deepEqual(b.getChannelData(x), a.getChannelData(x))
+      }
+
+      //test that rest of data is zero
+      if (to > from) {
+        for (let x = from; x < to; x++) {
+          t.deepEqual(b.getChannelData(x), zero)
+        }
+      }
     }
   }
 

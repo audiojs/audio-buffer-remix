@@ -33,7 +33,7 @@ quadBuffer = remix(stereoBuffer, 4)
 
 ## API
 
-### `let dest = remix(source, channels|map, {context, interpretation}?)`
+### `let dest = remix(source, channels|map, interpretation|{context, interpretation}?)`
 
 Take `source` audio buffer and upmix/downmix its channels to `dest` with the indicated number of `channels`. `options` may provide audio `context` or interpretation type: `'discrete'` or `'speaker'`, see [channelInterpretation MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode/channelInterpretation).
 
