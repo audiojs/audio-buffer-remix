@@ -129,14 +129,17 @@ function remix (source, channels, options) {
       }
     }
   }
-  else if (isPlainObj(map)) {
+  else if (isPlainObj(channels)) {
     let arrMap = []
-    for (let i in map) {
-      arrMap[i] = map[i]
+    for (let i in channels) {
+      arrMap[i] = channels[i]
     }
+    map = arrMap
+    channels = map.length
   }
-  else if (Array.isArray(map)) {
-
+  else if (Array.isArray(channels)) {
+    map = channels
+    channels = channels.length
   }
   else {
     throw Error('Target number of channels should be a number or map')
@@ -150,7 +153,6 @@ function remix (source, channels, options) {
   else {
     return mapBuffer(source)
   }
-
 
   function mapBuffer (source) {
     let dest = new AudioBuffer(channels, source.length, {context: options.context})

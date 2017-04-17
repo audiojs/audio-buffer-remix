@@ -88,6 +88,55 @@ t('speaker: dolby to *')
 
 t('speaker: * to *')
 
-t('custom mapper')
+t('object mapper', t => {
+  let a = AudioBuffer(2, [[1, 0, -1], [0, 1, -1]])
+
+  //object
+  let b = remix(a, {
+    0: 1,
+    1: null,
+    2: 0,
+    4: (dest, a) => {
+      let left = a.getChannelData(0), right = a.getChannelData(1)
+      for (let i = 0; i < a.length; i++) {
+        dest[i] = .5 * (left[i] + right[i])
+      }
+    }
+  })
+
+  t.deepEqual(b.getChannelData(0), [0, 1, -1])
+  t.deepEqual(b.getChannelData(1), [0, 0, 0])
+  t.deepEqual(b.getChannelData(2), [1, 0, -1])
+  t.deepEqual(b.getChannelData(3), [0, 0, 0])
+  t.deepEqual(b.getChannelData(4), [.5, .5, -1])
+
+  t.end()
+})
+
+t('array mapper', t => {
+  let a = AudioBuffer(2, [[1, 0, -1], [0, 1, -1]])
+
+  //array
+  let b = remix(a, [
+    1,
+    null,
+    0,
+    ,
+    (dest, a) => {
+      let left = a.getChannelData(0), right = a.getChannelData(1)
+      for (let i = 0; i < a.length; i++) {
+        dest[i] = .5 * (left[i] + right[i])
+      }
+    }
+  ])
+
+  t.deepEqual(b.getChannelData(0), [0, 1, -1])
+  t.deepEqual(b.getChannelData(1), [0, 0, 0])
+  t.deepEqual(b.getChannelData(2), [1, 0, -1])
+  t.deepEqual(b.getChannelData(3), [0, 0, 0])
+  t.deepEqual(b.getChannelData(4), [.5, .5, -1])
+
+  t.end()
+})
 
 t('keep buffer list')
