@@ -141,20 +141,32 @@ function remix (source, channels, options) {
     throw Error('Target number of channels should be a number or map')
   }
 
-  //do mapping
-  let dest = new AudioBuffer(channels, source.length, {context: options.context})
-  for (let c = 0; c < channels; c++) {
-    let outputData = dest.getChannelData(c)
-    let mapper = map[c]
-    if (mapper == null) continue;
-    if (c >= source.numberOfChannels) continue;
-    if (typeof mapper == 'number') {
-      let inputData = source.getChannelData(mapper)
-      outputData.set(inputData)
+  //source is buffer list - do per-buffer mapping
+  if (source.map) {
+    return source.map((buf) => mapBuffer(buf))
+  }
+  //otherwise map once
+  else {
+    return mapBuffer(source)
+  }
+
+
+  function mapBuffer (source) {
+    let dest = new AudioBuffer(channels, source.length, {context: options.context})
+    for (let c = 0; c < channels; c++) {
+      let outputData = dest.getChannelData(c)
+      let mapper = map[c]
+      if (mapper == null) continue;
+      if (typeof mapper == 'number') {
+        if (mapper >= source.numberOfChannels) continue;
+        let inputData = source.getChannelData(mapper)
+        outputData.set(inputData)
+      }
+      else if (typeof mapper == 'function') {
+        mapper(outputData, source)
+      }
     }
-    else if (typeof mapper == 'function') {
-      mapper(outputData, source)
-    }
+    return dest
   }
 
   return dest
