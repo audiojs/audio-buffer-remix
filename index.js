@@ -147,7 +147,7 @@ function remix (source, channels, options) {
 
   //source is buffer list - do per-buffer mapping
   if (source.map) {
-    return source.map((buf) => mapBuffer(buf))
+    return source.map(mapBuffer)
   }
   //otherwise map once
   else {

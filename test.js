@@ -4,6 +4,7 @@ const t = require('tape')
 const remix = require('./')
 const AudioBuffer = require('audio-buffer')
 const util = require('audio-buffer-utils')
+const AudioBufferList = require('audio-buffer-list')
 
 t('discrete: * to *', t => {
   let zero = new Float32Array(1024)
@@ -139,4 +140,16 @@ t('array mapper', t => {
   t.end()
 })
 
-t('keep buffer list')
+t('keep buffer list', t => {
+  let a = AudioBufferList([AudioBuffer(2, [[0,1,-1], [-1,0,1]]), AudioBuffer(2, [[0,.5,-.5], [-.5,0,.5]])])
+
+  let b = remix(a, 1)
+
+  let f = AudioBufferList([AudioBuffer(1, [-.5, .5, 0]), AudioBuffer(1, [-.25, .25, 0])])
+
+  t.ok(b.slice)
+  t.deepEqual(b.getChannelData(0), f.getChannelData(0))
+  t.equal(b.numberOfChannels, f.numberOfChannels)
+
+  t.end()
+})
