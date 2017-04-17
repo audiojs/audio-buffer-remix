@@ -85,9 +85,47 @@ t('speaker: quad to *', t => {
   t.end()
 })
 
-t('speaker: dolby to *')
+t.skip('speaker: dolby to *', t => {
+  let data0 = [0,0,0,0,0,0]
 
-t('speaker: * to *')
+  let dataL =  [0,1,-1]
+  let dataSL = [1,1,-1]
+  let dataR =  [-1,1,0]
+  let dataSR = [-1,-1,1]
+  let dataC =  [1,1,1]
+  let dataSB = [-1,-1,-1]
+
+  //FIX this
+  let dolby = new AudioBuffer(6, [dataL, dataR, dataC, dataSB, dataSL, dataSR])
+  let quad = new AudioBuffer(4, [dataL, dataR, dataSL, dataSR])
+  let mono = new AudioBuffer(1, [-.7071, .7071*2, ])
+  let stereo = new AudioBuffer(2, [[], []])
+
+  t.deepEqual(remix(quad, 1), mono)
+  t.deepEqual(remix(quad, 2), stereo)
+  t.deepEqual(remix(quad, 6), dolby)
+
+  t.end()
+})
+
+t('speaker: * to *', t => {
+  let a = AudioBuffer(3, [[1, 0, -1], [0, 1, -1], [-1, 1, 0]])
+
+  let b = remix(a, 4)
+
+  t.equal(b.numberOfChannels, 4)
+  t.deepEqual(b.getChannelData(0), a.getChannelData(0))
+  t.deepEqual(b.getChannelData(1), a.getChannelData(1))
+  t.deepEqual(b.getChannelData(2), a.getChannelData(2))
+  t.deepEqual(b.getChannelData(3), [0, 0, 0])
+
+  let c = remix(a, 1)
+  t.equal(c.numberOfChannels, 1)
+  t.notEqual(c.getChannelData(0), a.getChannelData(0))
+  t.deepEqual(c.getChannelData(0), a.getChannelData(0))
+
+  t.end()
+})
 
 t('object mapper', t => {
   let a = AudioBuffer(2, [[1, 0, -1], [0, 1, -1]])
