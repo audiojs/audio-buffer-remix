@@ -182,6 +182,7 @@ t('keep buffer list', t => {
   let a = AudioBufferList([AudioBuffer(2, [[0,1,-1], [-1,0,1]]), AudioBuffer(2, [[0,.5,-.5], [-.5,0,.5]])])
 
   let b = remix(a, 1)
+  t.equal(b.numberOfChannels, 1)
 
   let f = AudioBufferList([AudioBuffer(1, [-.5, .5, 0]), AudioBuffer(1, [-.25, .25, 0])])
 
